@@ -23,6 +23,3 @@ heading.textContent = 'Interesting!';
 // Append heading node to the DOM
 const app = document.querySelector('#root');
 app.append(heading, p, img);
-
-const codeStr = '(add 2 (subtract 4 2))'
-console.log(compiler(codeStr))
