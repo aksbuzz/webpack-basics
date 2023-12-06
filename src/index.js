@@ -2,6 +2,7 @@ import example from './assets/images/example.png'
 import banana from './assets/images/Bananas.svg'
 
 import './index.scss';
+import { compiler } from './compiler/compiler';
 
 class Game {
   name = 'Violin Charades';
@@ -22,3 +23,6 @@ heading.textContent = 'Interesting!';
 // Append heading node to the DOM
 const app = document.querySelector('#root');
 app.append(heading, p, img);
+
+const codeStr = '(add 2 (subtract 4 2))'
+console.log(compiler(codeStr))
