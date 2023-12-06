@@ -6,49 +6,49 @@
  * @param {string} tokens[].value - Value of the token
  */
 export function parser(tokens) {
-  let cursor = 0;
+  let cursor = 0
 
   function walk() {
-    let token = tokens[cursor];
+    let token = tokens[cursor]
 
     // Create a separate AST node for number, string
     if (token.type === 'number' || token.type === 'string') {
-      cursor++;
+      cursor++
       return {
         type: token.type === 'number' ? 'NumberLiteral' : 'StringLiteral',
         value: token.value,
-      };
+      }
     }
 
     // CallExpressions. Look for open paranthesis
     if (token.type === 'paren' && token.value === '(') {
       // skip '(' token, as not needed in AST
-      token = tokens[++cursor];
+      token = tokens[++cursor]
 
       let node = {
         type: 'CallExpression',
         // (add 2 3), here name = add
         name: token.value,
         params: [],
-      };
+      }
 
       // go to next token after name
-      token = tokens[++cursor];
+      token = tokens[++cursor]
 
       // Continue until we find a closing paranthesis
       while (token.type !== 'paren' || (token.type === 'paren' && token.value !== ')')) {
-        node.params.push(walk());
-        // we're incrementing cursor at (line 16 and line 46), but we're assigning 
+        node.params.push(walk())
+        // we're incrementing cursor at (line 16 and line 46), but we're assigning
         // it here
-        token = tokens[cursor];
+        token = tokens[cursor]
       }
 
       // skip closing paraenthesis
-      cursor++;
+      cursor++
 
-      return node;
+      return node
     }
-    throw new TypeError(token.type);
+    throw new TypeError(token.type)
   }
 
   // root node

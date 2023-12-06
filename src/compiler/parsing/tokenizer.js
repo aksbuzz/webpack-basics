@@ -3,13 +3,12 @@
  * @param {string} input string of code
  */
 export function tokenizer(input) {
-  let cursor = 0;
+  let cursor = 0
 
-  let tokens = [];
+  let tokens = []
 
   while (cursor < input.length) {
-    let char = input[cursor];
-
+    let char = input[cursor]
 
     if (char === '(') {
       tokens.push({ type: 'paren', value: '(' })
@@ -32,10 +31,10 @@ export function tokenizer(input) {
 
     // Number could be of any number of characters, (add 345 85)
     if (/[0-9]/.test(char)) {
-      let value = ""
+      let value = ''
 
       // if we find a number, run a loop till number exists
-      while(/[0-9]/.test(char)) {
+      while (/[0-9]/.test(char)) {
         value += char
         char = input[++cursor]
       }
@@ -46,14 +45,14 @@ export function tokenizer(input) {
 
     // Strings, check for opening quote and closing quote
     if (char === '"') {
-      let value = "";
+      let value = ''
 
       // skip opening quote
       char = input[++cursor]
       // until closing quote is not found
       while (char !== '"') {
-        value += char;
-        char = input[++cursor];
+        value += char
+        char = input[++cursor]
       }
 
       tokens.push({ type: 'string', value: value })
@@ -65,15 +64,15 @@ export function tokenizer(input) {
       let value = ''
 
       while (/[a-z]/i.test(char)) {
-        value += char;
-        char = input[++cursor];
+        value += char
+        char = input[++cursor]
       }
 
       tokens.push({ type: 'name', value: value })
       continue
     }
 
-    throw new Error('Unsupported character: ', + char)
+    throw new Error('Unsupported character: ', +char)
   }
 
   return tokens

@@ -1,4 +1,4 @@
-import { traverser } from './traverser';
+import { traverser } from './traverser'
 
 /**
  * Take AST and pass it to traversor with a visitor and
@@ -8,26 +8,25 @@ import { traverser } from './traverser';
  */
 export function transformer(ast) {
   // target code AST
-  let newAst = { type: 'Program', body: [] };
+  let newAst = { type: 'Program', body: [] }
 
-  // We're going to use a property named `context` 
+  // We're going to use a property named `context`
   // on our parent nodes that we're going to push
   // nodes to their parent's `context`.
-  ast._context = newAst.body;
-
+  ast._context = newAst.body
 
   traverser(ast, {
     NumberLiteral: {
       enter(node, parent) {
         // push to the arguments array of CallExpression
-        parent._context.push({ type: 'NumberLiteral', value: node.value });
+        parent._context.push({ type: 'NumberLiteral', value: node.value })
       },
     },
 
     StringLiteral: {
       enter(node, parent) {
         // push to the arguments array of CallExpression
-        parent._context.push({ type: 'StringLiteral', value: node.value });
+        parent._context.push({ type: 'StringLiteral', value: node.value })
       },
     },
 
@@ -42,22 +41,22 @@ export function transformer(ast) {
             name: node.name,
           },
           arguments: [],
-        };
+        }
         // reference so that we can push arguments to newAst
-        node._context = expression.arguments;
+        node._context = expression.arguments
 
         if (parent.type !== 'CallExpression') {
           expression = {
             type: 'ExpressionStatement',
             expression: expression,
-          };
+          }
         }
 
         // push to the arguments array of CallExpression
-        parent._context.push(expression);
-      }
-    }
-  });
+        parent._context.push(expression)
+      },
+    },
+  })
 
   return newAst
 }
