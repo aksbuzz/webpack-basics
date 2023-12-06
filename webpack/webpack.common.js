@@ -43,7 +43,7 @@ module.exports = {
   module: {
     rules: [
       // Javascript. Use babel to transpile
-      { test: /\.js$/, use: ['babel-loader'] },
+      { test: /\.(js|jsx)$/, use: ['babel-loader'] },
 
       // Images - a type and not a loader
       {
